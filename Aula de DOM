@@ -1,0 +1,6 @@
+Definição: DOM é o Modelo de Objetos Documento.
+-> O que faz? Permite que o JavaScript converse com o navegador e altere o que é visível.
+-> O que é DOM em Javascript??
+Altera dados, cores, fontes, tamanhos e afins na tela e não no código fonte. 
+O código fonte permanece o mesmo, intacto. É uma forma de mudarmos o conteúdo sem precisar recarregar a
+página.
