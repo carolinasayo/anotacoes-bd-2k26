@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Horários · Desenvolvimento de Sistemas</title>
+  <meta name="description" content="Consulta de horários de aula, professores e salas do curso de Desenvolvimento de Sistemas." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topo">
+    <div class="container">
+      <p class="selo">Banco de Dados II · Hackathon</p>
+      <h1>Horários de Aula</h1>
+      <p class="sub">Curso de Desenvolvimento de Sistemas — consulte por turma, professor, dia ou sala.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- FILTROS -->
+    <section class="filtros" aria-label="Filtros de consulta">
+      <label>Turma
+        <select id="f-turma"><option value="">Todas</option></select>
+      </label>
+      <label>Professor
+        <select id="f-professor"><option value="">Todos</option></select>
+      </label>
+      <label>Disciplina
+        <select id="f-disciplina"><option value="">Todas</option></select>
+      </label>
+      <label>Dia da semana
+        <select id="f-dia"><option value="">Todos</option></select>
+      </label>
+      <label>Sala / Laboratório
+        <select id="f-sala"><option value="">Todas</option></select>
+      </label>
+      <button id="btn-limpar" type="button" class="btn-limpar">Limpar filtros</button>
+    </section>
+
+    <!-- ABAS -->
+    <div class="abas" role="tablist" aria-label="Visualização">
+      <button role="tab" id="aba-grade" aria-selected="true"  data-view="grade">Grade semanal</button>
+      <button role="tab" id="aba-lista" aria-selected="false" data-view="lista">Lista de aulas</button>
+      <button role="tab" id="aba-prof"  aria-selected="false" data-view="prof">Disciplinas e professores</button>
+      <span id="contador" class="contador" aria-live="polite"></span>
+    </div>
+
+    <p id="status" class="status">Carregando banco de dados…</p>
+
+    <section id="view-grade" class="view" role="tabpanel" aria-labelledby="aba-grade" hidden></section>
+    <section id="view-lista" class="view" role="tabpanel" aria-labelledby="aba-lista" hidden></section>
+    <section id="view-prof"  class="view" role="tabpanel" aria-labelledby="aba-prof"  hidden></section>
+  </main>
+
+  <footer class="rodape container">
+    <small>Grades das turmas do Ensino Médio com Desenvolvimento de Sistemas · Banco SQLite rodando no navegador (sql.js)</small>
+  </footer>
+
+  <!-- sql.js (SQLite em WebAssembly) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
