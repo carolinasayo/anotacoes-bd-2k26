@@ -1,10 +1,12 @@
-/* ============================================================
-   app.js - interface: filtros, abas e renderização
-   ============================================================ */
+/* app.js - interface: filtros, abas e renderização */
 (async function () {
   const $ = (sel) => document.querySelector(sel);
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  // Cada disciplina ganha sempre a mesma cor pastel (0 a 7), calculada a partir da sigla
+  const corDe = (sigla) =>
+    [...String(sigla)].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7) % 8;
 
   const statusEl = $("#status");
   const filtros = {
@@ -82,7 +84,7 @@
   // Grade semanal: linhas = horários, colunas = dias
   function renderGrade(aulas, f) {
     const el = $("#view-grade");
-    if (!aulas.length) return (el.innerHTML = vazio("Nenhuma aula encontrada com esses filtros."));
+    if (!aulas.length) return (el.innerHTML = vazio("Nenhuma aula encontrada. Tente limpar algum filtro."));
 
     const diasVisiveis = f.dia ? dias.filter((d) => String(d.id) === String(f.dia)) : dias;
     const mostrarTurma = !f.turma;
@@ -110,10 +112,9 @@
   }
 
   function cardAula(a, mostrarTurma) {
-    const lab = a.sala_tipo === "Laboratório";
     const grupo = rotuloGrupo(a.grupo);
     return `
-      <div class="aula${lab ? " lab" : ""}">
+      <div class="aula" data-cor="${corDe(a.disciplina_sigla)}">
         <strong>${esc(a.disciplina)}</strong>
         <span class="prof">${esc(a.professor)}</span>
         <div class="tags">
@@ -127,7 +128,7 @@
   // Lista completa (tabela)
   function renderLista(aulas) {
     const el = $("#view-lista");
-    if (!aulas.length) return (el.innerHTML = vazio("Nenhuma aula encontrada com esses filtros."));
+    if (!aulas.length) return (el.innerHTML = vazio("Nenhuma aula encontrada. Tente limpar algum filtro."));
     const linhas = aulas
       .map(
         (a) => `<tr>
@@ -149,7 +150,7 @@
   // Disciplinas x professores
   function renderProfessores(rows) {
     const el = $("#view-prof");
-    if (!rows.length) return (el.innerHTML = vazio("Nenhum resultado com esses filtros."));
+    if (!rows.length) return (el.innerHTML = vazio("Nenhum resultado. Tente limpar algum filtro."));
     const linhas = rows
       .map(
         (r) => `<tr>
